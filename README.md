@@ -20,3 +20,12 @@ Update this variable with the path to your network daemon along with any paramet
 ### $hostsFile
 Update this variable to point to the location of your hosts file. Make sure it is an absolute path.
 
+## Extensions and Additional Information
+
+#### [Added by colinyoung]
+
+Currently, Pinboard.in is the only supported extension.  Update your credentials using the sample **CONFIG.sample** file.
+
+Then, tag posts with the tag you used (in my case, 'gsd').  Here's a screenshot of what that looks like:
+
+![Guide image for configuring pinboard.in](http://cl.ly/0F0p051H0I3u0X2G450b/content)
