@@ -1,0 +1,6 @@
+<?php
+
+/* Rename this file to CONFIG and insert your own apps/credentials */
+
+$remote_creds['pinboard.in']['username'] = '';
+$remote_creds['pinboard.in']['password'] = '';

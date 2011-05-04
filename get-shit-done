@@ -1,5 +1,9 @@
 #!/usr/bin/php
 <?php
+include("extensions/sync.php");
+define("CONFIG_FILE_NAME", "CONFIG");
+define("XML_MODE_ATTRIBUTE", 0);
+define("XML_MODE_NODE", 1);
 
 if ( 1 == $argc ) {
 	exitWithError("usage: " . $argv[0] . " [work | play]");
@@ -22,6 +26,30 @@ $siteList = array(
 	'plurk.com', 'stickam.com', 'stumbleupon.com',
 	'yelp.com', 'slashdot.com'
 );
+
+/*
+Pinboard.in syncing -- set $tag to tag of sites to be blocked
+
+On application run you will need to specify password with -p password OR store in CONFIG file.
+*/
+$remote_apps = array("pinboard_in");
+$remote_creds = array();
+
+# Include config
+if (file_exists(CONFIG_FILE_NAME)) include(CONFIG_FILE_NAME);
+
+foreach ($remote_apps as $app) { 
+  # Include apps
+  include("extensions/$app.php");
+  
+  # Sync apps
+  $array = sync($app, $remote_apps[$app]);
+  foreach ($array as $site) {
+    if (!in_array($site, $siteList)) {
+      $siteList[] = $site;
+    }
+  }
+}
 
 $restartNetworkingCommand = 'ifconfig en0 down; ifconfig en0 up';
 $hostsFile = '/etc/hosts';
@@ -48,6 +76,10 @@ switch ( $action ) {
 		
 		shell_exec($restartNetworkingCommand);
 		
+		print "\r\nFinished.\r\n" .
+		      count($siteList) . " domains blocked.\r\n" .
+		      "Hope you enjoyed your time off, now go be a super-productive hero. GET TO WORK, BITCH!\r\n";
+		
 		break;
 	}
 	
@@ -70,6 +102,10 @@ switch ( $action ) {
 			shell_exec($restartNetworkingCommand);
 		}
 		
+		print "\r\nFinished.\r\n" .
+		      count($siteList) . " domains now accessible.\r\n" .
+		      "Enjoy playing!\r\n";
+				
 		break;
 	}
 }
