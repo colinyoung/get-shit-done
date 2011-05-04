@@ -36,11 +36,11 @@ $remote_apps = array("pinboard_in");
 $remote_creds = array();
 
 # Include config
-if (file_exists(CONFIG_FILE_NAME)) include(CONFIG_FILE_NAME);
+if (file_exists(dirname(__FILE__) . '/' . CONFIG_FILE_NAME)) include(CONFIG_FILE_NAME);
 
 foreach ($remote_apps as $app) { 
   # Include apps
-  include("extensions/$app.php");
+  include(dirname(__FILE__) . '/' . "extensions/$app.php");
   
   # Sync apps
   $array = sync($app, $remote_apps[$app]);
