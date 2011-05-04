@@ -23,7 +23,7 @@ $siteList = array(
 	'yelp.com', 'slashdot.com'
 );
 
-$restartNetworkingCommand = '/etc/init.d/networking restart';
+$restartNetworkingCommand = 'ifconfig en0 down; ifconfig en0 up';
 $hostsFile = '/etc/hosts';
 $startToken = '## start-gsd';
 $endToken = '## end-gsd';
