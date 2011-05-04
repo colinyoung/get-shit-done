@@ -50,8 +50,6 @@ foreach ($remote_apps as $app) {
     }
   }
 }
-print_r($siteList);
-die;
 
 $restartNetworkingCommand = 'ifconfig en0 down; ifconfig en0 up';
 $hostsFile = '/etc/hosts';
