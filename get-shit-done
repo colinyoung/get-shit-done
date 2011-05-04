@@ -36,7 +36,8 @@ $remote_apps = array("pinboard_in");
 $remote_creds = array();
 
 # Include config
-if (file_exists(dirname(__FILE__) . '/' . CONFIG_FILE_NAME)) include(CONFIG_FILE_NAME);
+$config_fp = dirname(__FILE__) . '/' . CONFIG_FILE_NAME);
+if (file_exists($config_fp)) include($config_fp);
 
 foreach ($remote_apps as $app) { 
   # Include apps
