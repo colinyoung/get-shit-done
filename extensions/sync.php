@@ -23,12 +23,11 @@ function sync($app, $config, $method='GET') {
     foreach ($xml as $node => $value) {
       if ($node == $config['node']) {
         
-        if ($config['xml_mode'] == XML_ATTRIBUTE_MODE) {
-          # Attributes
-          $response[] = $value['@attributes'][$config['property']];
+        if (is_array($value)) {
+          foreach ($value as $key => $sub_value)
+            parse_xml_node(&$response, $sub_value, $config);
         } else {
-          # Nodes
-          $response[] = $value[$config['property']];
+          parse_xml_node(&$response, $value, $config);
         }
       }
     }
@@ -48,9 +47,19 @@ function domains_only($arr) {
   $r = array();
   foreach ($arr as $url) {
     $parsed_url = parse_url($url);
-    $r[] = $parsed_url['host'];
+    $r[] = array_key_exists('host', $parsed_url) ? $parsed_url['host'] : $parsed_url['path'];
   }
   return $r;
+}
+
+function parse_xml_node($response, $value, $config) {
+  if ($xml_mode == $config['xml_mode']) {
+    # Attributes
+    $response[] = $value['@attributes'][$config['property']];
+  } else {
+    # Nodes
+    $response[] = $value[$config['property']];
+  }
 }
 
 /* LIB */
